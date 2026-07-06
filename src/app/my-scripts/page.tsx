@@ -1,4 +1,4 @@
-import { Heart, Plus } from "lucide-react";
+import { Heart, Plus, FileText } from "lucide-react";
 import { ScriptCard } from "@/components/scripts/script-card";
 import { Button } from "@/components/ui/button";
 import { mockMyScripts } from "@/lib/mock-data";
@@ -6,6 +6,7 @@ import { mockMyScripts } from "@/lib/mock-data";
 export default function MyScriptsPage() {
   const publishedScripts = mockMyScripts.filter((s) => s.playerCount > 0);
   const draftScripts = mockMyScripts.filter((s) => s.playerCount === 0);
+  const hasAny = publishedScripts.length > 0 || draftScripts.length > 0;
 
   return (
     <div className="mx-auto w-full" style={{ maxWidth: "1200px", padding: "1.5rem 1rem" }}>
@@ -20,42 +21,58 @@ export default function MyScriptsPage() {
         </Button>
       </div>
 
-      {/* 已发布 */}
-      {publishedScripts.length > 0 && (
-        <section className="mb-6">
-          <h2 className="mb-3 text-app-text-l2" style={{ fontSize: "1rem", fontWeight: 600 }}>
-            已发布
-          </h2>
-          <div
-            className="rounded-lg border p-6"
-            style={{ backgroundColor: "var(--app-bg-l2)", borderColor: "var(--app-border-l1)" }}
-          >
-            <div className="grid gap-5" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))" }}>
-              {publishedScripts.map((script) => (
-                <ScriptCard key={script.id} script={script} href={`/my-scripts/${script.id}`} />
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
+      {!hasAny ? (
+        <div
+          className="flex flex-col items-center justify-center rounded-lg border py-20 text-center"
+          style={{
+            backgroundColor: "var(--app-bg-l2)",
+            borderColor: "var(--app-border-l1)",
+          }}
+        >
+          <FileText className="h-12 w-12 text-app-text-l6" />
+          <p className="mt-4 text-app-text-l4">你还没有创建任何剧本</p>
+          <p className="mt-1 text-sm text-app-text-l5">点击右上角「新建剧本」开始创作</p>
+        </div>
+      ) : (
+        <>
+          {/* 已发布 */}
+          {publishedScripts.length > 0 && (
+            <section className="mb-6">
+              <h2 className="mb-3 text-app-text-l2" style={{ fontSize: "1rem", fontWeight: 600 }}>
+                已发布
+              </h2>
+              <div
+                className="rounded-lg border p-6"
+                style={{ backgroundColor: "var(--app-bg-l2)", borderColor: "var(--app-border-l1)" }}
+              >
+                <div className="grid gap-5" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))" }}>
+                  {publishedScripts.map((script) => (
+                    <ScriptCard key={script.id} script={script} href={`/my-scripts/${script.id}`} />
+                  ))}
+                </div>
+              </div>
+            </section>
+          )}
 
-      {/* 草稿 */}
-      {draftScripts.length > 0 && (
-        <section>
-          <h2 className="mb-3 text-app-text-l2" style={{ fontSize: "1rem", fontWeight: 600 }}>
-            草稿
-          </h2>
-          <div
-            className="rounded-lg border p-6"
-            style={{ backgroundColor: "var(--app-bg-l2)", borderColor: "var(--app-border-l1)" }}
-          >
-            <div className="grid gap-5" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))" }}>
-              {draftScripts.map((script) => (
-                <ScriptCard key={script.id} script={script} href={`/my-scripts/${script.id}`} />
-              ))}
-            </div>
-          </div>
-        </section>
+          {/* 草稿 */}
+          {draftScripts.length > 0 && (
+            <section>
+              <h2 className="mb-3 text-app-text-l2" style={{ fontSize: "1rem", fontWeight: 600 }}>
+                草稿
+              </h2>
+              <div
+                className="rounded-lg border p-6"
+                style={{ backgroundColor: "var(--app-bg-l2)", borderColor: "var(--app-border-l1)" }}
+              >
+                <div className="grid gap-5" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))" }}>
+                  {draftScripts.map((script) => (
+                    <ScriptCard key={script.id} script={script} href={`/my-scripts/${script.id}`} />
+                  ))}
+                </div>
+              </div>
+            </section>
+          )}
+        </>
       )}
     </div>
   );

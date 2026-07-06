@@ -238,10 +238,23 @@
     outline-color: var(--app-color-theme);
   }
 
+  /* focus-visible — keyboard navigation ring */
+  *:focus-visible {
+    outline: 2px solid var(--app-color-theme);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  /* remove default outline only when mouse focus */
+  *:focus:not(:focus-visible) {
+    outline: none;
+  }
+
   html {
     font-family: var(--font-sans);
     font-size: calc(var(--app-font-base) * var(--app-font-scale));
     -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
   }
 
   body {
@@ -249,9 +262,16 @@
     color: var(--app-text-l2);
     margin: 0;
     min-height: 100vh;
-    line-height: 1.5;
+    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* selection color */
+  ::selection {
+    background-color: var(--app-color-theme-fade);
+    color: var(--app-text-l1);
   }
 
   /* mobile font scale */
@@ -330,3 +350,114 @@
 .animate-fade-in {
   animation: fade-in 0.3s ease;
 }
+
+/* ==========================================================================
+   UI Enhancement Utilities
+   ========================================================================== */
+
+/* Card hover elevation — subtle lift + shadow */
+.card-hover {
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.card-hover:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.12),
+              0 2px 8px -2px rgba(0, 0, 0, 0.08);
+}
+:is(.dark) .card-hover:hover {
+  box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.4),
+              0 2px 8px -2px rgba(0, 0, 0, 0.3);
+}
+
+/* Press feedback — buttons, chips */
+.press-feedback {
+  transition: transform 0.1s ease, background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.press-feedback:active {
+  transform: scale(0.96);
+}
+
+/* Sort tab underline indicator */
+.sort-tab {
+  position: relative;
+  transition: color 0.2s ease;
+}
+.sort-tab::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--app-color-theme);
+  border-radius: 999px;
+  transform: translateX(-50%);
+  transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.sort-tab.is-active::after {
+  width: 70%;
+}
+
+/* Genre chip hover */
+.chip-hover {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.chip-hover:hover {
+  transform: translateY(-1px);
+}
+
+/* Top bar blur backdrop */
+.topbar-blur {
+  backdrop-filter: blur(12px) saturate(1.5);
+  -webkit-backdrop-filter: blur(12px) saturate(1.5);
+}
+
+/* Scene text typography — for game player narrative */
+.scene-text {
+  line-height: 1.85;
+  letter-spacing: 0.01em;
+}
+.scene-text p {
+  margin-bottom: 1em;
+}
+.scene-text p:last-child {
+  margin-bottom: 0;
+}
+
+/* Option button — game player */
+.game-option {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.game-option:hover {
+  transform: translateX(4px);
+}
+
+/* Subtle entrance animation */
+@keyframes slide-up-fade {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-slide-up {
+  animation: slide-up-fade 0.4s cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+
+/* Stagger children animation */
+.stagger > * {
+  animation: slide-up-fade 0.4s cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+.stagger > *:nth-child(1) { animation-delay: 0ms; }
+.stagger > *:nth-child(2) { animation-delay: 50ms; }
+.stagger > *:nth-child(3) { animation-delay: 100ms; }
+.stagger > *:nth-child(4) { animation-delay: 150ms; }
+.stagger > *:nth-child(5) { animation-delay: 200ms; }
+.stagger > *:nth-child(6) { animation-delay: 250ms; }
+.stagger > *:nth-child(7) { animation-delay: 300ms; }
+.stagger > *:nth-child(8) { animation-delay: 350ms; }

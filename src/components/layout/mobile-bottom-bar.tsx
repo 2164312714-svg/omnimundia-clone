@@ -59,12 +59,20 @@ export function MobileBottomBar() {
             href={item.path}
             onClick={handleClick}
             className={cn(
-              "flex flex-col items-center justify-center gap-0.5 rounded-[14px] py-1 no-underline transition-all duration-200",
+              "press-feedback flex flex-col items-center justify-center gap-0.5 rounded-[14px] py-1 no-underline transition-all duration-200",
               isActive
                 ? "bg-app-theme-fade text-app-theme font-semibold"
                 : "text-app-text-l4 hover:text-app-text-l3"
             )}
-            style={{ minHeight: "40px" }}
+            style={
+              item.isCenter
+                ? {
+                    backgroundColor: "var(--app-color-theme)",
+                    color: "var(--app-color-secondary)",
+                    minHeight: "40px",
+                  }
+                : { minHeight: "40px" }
+            }
           >
             <Icon className={cn("h-5 w-5", item.isCenter && "h-6 w-6")} />
             <span className="text-xs">{item.label}</span>

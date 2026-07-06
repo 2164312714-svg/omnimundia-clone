@@ -76,7 +76,13 @@ export default function ScriptSelectionPage() {
       style={{ maxWidth: "1200px", padding: "1.5rem 1rem" }}
     >
       {/* 轮播 Banner */}
-      <div className="mb-4 overflow-hidden rounded-lg" style={{ backgroundColor: "var(--app-bg-l3)" }}>
+      <div
+        className="mb-4 overflow-hidden rounded-xl"
+        style={{
+          backgroundColor: "var(--app-bg-l3)",
+          boxShadow: "0 4px 16px -4px rgba(0, 0, 0, 0.1)",
+        }}
+      >
         <Carousel opts={{ loop: true, align: "start" }}>
           <CarouselContent>
             {carouselBanners.map((banner) => (
@@ -116,10 +122,10 @@ export default function ScriptSelectionPage() {
                 setCurrentPage(1);
               }}
               className={cn(
-                "rounded-md px-3 py-1.5 text-sm transition-colors",
+                "chip-hover press-feedback rounded-md px-3 py-1.5 text-sm",
                 activeCategory === cat.key
                   ? "font-semibold text-app-theme"
-                  : "text-app-text-l4 hover:text-app-text-l1"
+                  : "text-app-text-l4 transition-colors hover:text-app-text-l1"
               )}
               style={
                 activeCategory === cat.key
@@ -147,7 +153,10 @@ export default function ScriptSelectionPage() {
       </div>
 
       {/* 排序栏 */}
-      <div className="mb-3 flex items-center justify-between">
+      <div
+        className="mb-3 flex items-center justify-between border-b pb-2"
+        style={{ borderColor: "var(--app-border-l1)" }}
+      >
         <div className="flex items-center gap-1">
           {sortOptions.map((opt) => {
             const Icon = sortIcons[opt.value] ?? Flame;
@@ -156,9 +165,9 @@ export default function ScriptSelectionPage() {
                 key={opt.value}
                 onClick={() => setSortBy(opt.value)}
                 className={cn(
-                  "flex items-center gap-1 rounded-md px-3 py-1.5 text-sm transition-colors",
+                  "sort-tab flex items-center gap-1 px-3 py-1.5 text-sm",
                   sortBy === opt.value
-                    ? "font-semibold text-app-theme"
+                    ? "is-active font-semibold text-app-theme"
                     : "text-app-text-l4 hover:text-app-text-l1"
                 )}
               >
@@ -183,7 +192,7 @@ export default function ScriptSelectionPage() {
           }}
         >
           <div
-            className="grid gap-5"
+            className="stagger grid gap-5"
             style={{
               gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
             }}
@@ -222,7 +231,7 @@ export default function ScriptSelectionPage() {
                   <button
                     onClick={() => setCurrentPage(page)}
                     className={cn(
-                      "cursor-pointer rounded-md px-3 py-1 text-sm transition-colors",
+                      "press-feedback cursor-pointer rounded-md px-3 py-1 text-sm transition-colors",
                       currentPage === page
                         ? "font-semibold text-app-secondary"
                         : "text-app-text-l4 hover:bg-app-bg-l7"

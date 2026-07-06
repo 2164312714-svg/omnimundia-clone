@@ -43,10 +43,11 @@ export function TopBar() {
 
   return (
     <header
-      className="fixed left-0 right-0 top-0 z-[1000] flex h-[50px] shrink-0 items-center justify-between border-b px-6"
+      className="topbar-blur fixed left-0 right-0 top-0 z-[1000] flex h-[50px] shrink-0 items-center justify-between border-b px-6 transition-shadow"
       style={{
-        backgroundColor: "var(--app-bg-topbar)",
+        backgroundColor: "color-mix(in srgb, var(--app-bg-topbar) 82%, transparent)",
         borderColor: "var(--app-border-l1)",
+        boxShadow: "0 1px 3px rgba(0, 0, 0, 0.04)",
       }}
     >
       {/* 左侧：Logo + 导航 */}
@@ -61,12 +62,12 @@ export function TopBar() {
                 key={item.key}
                 href={item.path}
                 className={cn(
-                  "flex items-center gap-1.5 rounded-md px-4 py-2 text-sm transition-colors no-underline",
+                  "press-feedback flex items-center gap-1.5 rounded-md px-4 py-2 text-sm no-underline",
                   isActive
                     ? "font-semibold text-app-theme"
-                    : "text-app-text-l4 hover:text-app-text-l1"
+                    : "text-app-text-l4 transition-colors hover:text-app-text-l1"
                 )}
-                style={isActive ? { backgroundColor: "transparent" } : undefined}
+                style={isActive ? { backgroundColor: "var(--app-color-theme-fade)" } : undefined}
               >
                 <Icon className="h-4 w-4" />
                 <span>{item.label}</span>

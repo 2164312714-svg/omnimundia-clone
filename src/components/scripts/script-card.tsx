@@ -36,7 +36,7 @@ export function ScriptCard({ script, className, isListMode = false, href }: Scri
   return (
     <Card
       className={cn(
-        "group cursor-pointer p-3 transition-colors",
+        "card-hover group cursor-pointer p-3",
         isListMode
           ? "rounded-none border-x-0 first:border-t-0"
           : "hover:bg-app-bg-l5",

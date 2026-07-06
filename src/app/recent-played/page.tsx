@@ -24,7 +24,7 @@ export default function RecentPlayedPage() {
           }}
         >
           <div
-            className="grid gap-5"
+            className="stagger grid gap-5"
             style={{ gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))" }}
           >
             {recentScripts.map((script) => (

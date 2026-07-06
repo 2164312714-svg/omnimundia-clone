@@ -193,7 +193,7 @@ export function GamePlayer({ scriptId }: { scriptId: string }) {
               {/* 场景内容 */}
               <div
                 ref={sceneRef}
-                className="min-h-0 flex-1 overflow-y-auto p-6"
+                className="scene-text min-h-0 flex-1 overflow-y-auto p-6"
                 style={{ backgroundColor: "var(--app-bg-l2)" }}
               >
                 {isProcessing ? (
@@ -205,7 +205,13 @@ export function GamePlayer({ scriptId }: { scriptId: string }) {
                 ) : (
                   <>
                     <div className="mb-4 flex items-center gap-2 text-xs text-app-text-l5">
-                      <span className="rounded px-2 py-0.5" style={{ backgroundColor: "var(--app-bg-l3)" }}>
+                      <span
+                        className="rounded-full px-2.5 py-0.5 font-medium"
+                        style={{
+                          backgroundColor: "var(--app-color-theme-fade)",
+                          color: "var(--app-color-theme)",
+                        }}
+                      >
                         第 {currentTurn.turn} 回合
                       </span>
                       {currentTurn.time && <span>{currentTurn.time}</span>}
@@ -241,10 +247,10 @@ export function GamePlayer({ scriptId }: { scriptId: string }) {
                       onClick={handleOptionClick}
                       disabled={option.isDisabled}
                       className={cn(
-                        "relative flex items-center rounded-[14px] border px-4 py-2.5 text-left text-sm transition-all",
+                        "game-option relative flex items-center rounded-[14px] border px-4 py-2.5 text-left text-sm",
                         option.isDisabled
                           ? "cursor-not-allowed opacity-50"
-                          : "hover:border-app-border-hover"
+                          : "hover:border-app-border-hover hover:shadow-sm"
                       )}
                       style={{
                         backgroundColor: "var(--app-bg-game-option)",

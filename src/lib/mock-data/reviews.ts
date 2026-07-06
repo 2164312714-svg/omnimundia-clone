@@ -1,0 +1,140 @@
+import type { ScriptReview, ScriptVersion, Script } from "@/lib/types";
+
+/** 管理后台 - 剧本审核列表 mock */
+export const mockReviews: ScriptReview[] = [
+  {
+    id: "review-001",
+    scriptVersionId: "sv-001",
+    scriptTitle: "雾港迷踪",
+    author: "白 queen",
+    authorEmail: "author1@example.com",
+    versionName: "v1.3",
+    description: "新增第三幕'灯塔之下'内容，修复了骰子检定逻辑，补充了 3 个 NPC 的设定。",
+    submittedAt: "2026-06-30T10:00:00Z",
+    status: "pending",
+  },
+  {
+    id: "review-002",
+    scriptVersionId: "sv-002",
+    scriptTitle: "镜中城",
+    author: "迷宫匠人",
+    authorEmail: "author2@example.com",
+    versionName: "v1.1",
+    description: "初版发布后的第一个修订版本，优化了开场的节奏。",
+    submittedAt: "2026-06-29T16:00:00Z",
+    status: "pending",
+  },
+  {
+    id: "review-003",
+    scriptVersionId: "sv-003",
+    scriptTitle: "时间裁缝",
+    author: "齿轮",
+    authorEmail: "author3@example.com",
+    versionName: "v1.0",
+    description: "首次提交审核。",
+    submittedAt: "2026-06-28T14:00:00Z",
+    status: "pending",
+  },
+];
+
+/** 管理后台 - 未通过剧本 mock */
+export const mockRejectedReviews: ScriptReview[] = [
+  {
+    id: "review-004",
+    scriptVersionId: "sv-004",
+    scriptTitle: "未命名剧本",
+    author: "新手作者",
+    authorEmail: "author4@example.com",
+    versionName: "v0.3",
+    description: "内容不完整，实体设定缺失。",
+    submittedAt: "2026-06-25T10:00:00Z",
+    status: "rejected",
+    rejectReason: "剧本核心实体未配置属性组，无法支撑推演。请补充至少一个主要实体的完整属性后再提交。",
+  },
+];
+
+/** 我的剧本 - 用户的剧本列表 mock */
+export const mockMyScripts: Script[] = [
+  {
+    id: "my-script-001",
+    title: "雾港迷踪",
+    description: "一座常年被雾气笼罩的港口小镇，接连发生离奇失踪案。",
+    author: "白 queen",
+    tags: ["悬疑", "调查", "克苏鲁"],
+    genre: "脑洞",
+    playerCount: 1284,
+    likeCount: 367,
+    commentCount: 89,
+    isLiked: false,
+    isEarlyAccess: true,
+    category: "脑洞",
+    portalFeatured: true,
+    createdAt: "2026-06-15T10:00:00Z",
+    updatedAt: "2026-06-28T14:30:00Z",
+  },
+  {
+    id: "my-script-002",
+    title: "未命名剧本",
+    description: "草稿状态，尚未完成设定。",
+    author: "白 queen",
+    tags: [],
+    genre: "全部",
+    playerCount: 0,
+    likeCount: 0,
+    commentCount: 0,
+    isLiked: false,
+    isEarlyAccess: false,
+    category: "全部",
+    portalFeatured: false,
+    createdAt: "2026-06-29T10:00:00Z",
+    updatedAt: "2026-06-30T08:00:00Z",
+  },
+];
+
+/** 我的剧本版本列表 mock */
+export const mockScriptVersions: ScriptVersion[] = [
+  {
+    id: "sv-001",
+    scriptId: "my-script-001",
+    name: "v1.3",
+    description: "新增第三幕'灯塔之下'内容",
+    status: "pending",
+    isLatest: true,
+    isLatestPublished: false,
+    createdAt: "2026-06-30T10:00:00Z",
+    updatedAt: "2026-06-30T10:00:00Z",
+  },
+  {
+    id: "sv-002",
+    scriptId: "my-script-001",
+    name: "v1.2",
+    description: "已发布版本，修复了骰子检定逻辑",
+    status: "published",
+    isLatest: false,
+    isLatestPublished: true,
+    createdAt: "2026-06-20T10:00:00Z",
+    updatedAt: "2026-06-28T14:30:00Z",
+  },
+  {
+    id: "sv-003",
+    scriptId: "my-script-001",
+    name: "v1.1",
+    description: "补充了 3 个 NPC 的设定",
+    status: "published",
+    isLatest: false,
+    isLatestPublished: false,
+    createdAt: "2026-06-10T10:00:00Z",
+    updatedAt: "2026-06-15T10:00:00Z",
+  },
+  {
+    id: "sv-004",
+    scriptId: "my-script-002",
+    name: "草稿",
+    description: "尚未完成",
+    status: "draft",
+    isLatest: true,
+    isLatestPublished: false,
+    createdAt: "2026-06-29T10:00:00Z",
+    updatedAt: "2026-06-30T08:00:00Z",
+  },
+];

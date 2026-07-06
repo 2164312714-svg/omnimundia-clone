@@ -1,0 +1,332 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ==========================================================================
+   Omnimundia Design Tokens
+   Source: extracted from omnimundia.css (484 KB) during pentest recon.
+   The original site layers a custom --app-* token system on top of
+   Element Plus defaults. This ports that system to Tailwind v4 + shadcn/ui.
+   ========================================================================== */
+
+@theme inline {
+  /* shadcn standard token → omnimundia mapping */
+  --color-background: var(--app-bg-l1);
+  --color-foreground: var(--app-text-l1);
+  --color-card: var(--app-bg-card);
+  --color-card-foreground: var(--app-text-l1);
+  --color-popover: var(--app-bg-l5);
+  --color-popover-foreground: var(--app-text-l2);
+  --color-primary: var(--app-color-theme);
+  --color-primary-foreground: var(--app-color-secondary);
+  --color-secondary: var(--app-bg-l6);
+  --color-secondary-foreground: var(--app-text-l2);
+  --color-muted: var(--app-bg-l3);
+  --color-muted-foreground: var(--app-text-l4);
+  --color-accent: var(--app-color-theme-fade);
+  --color-accent-foreground: var(--app-color-theme);
+  --color-destructive: var(--app-color-red);
+  --color-destructive-foreground: #ffffff;
+  --color-border: var(--app-border-l1);
+  --color-input: var(--app-border-l2);
+  --color-ring: var(--app-color-theme);
+
+  /* sidebar tokens (shadcn) */
+  --color-sidebar: var(--app-bg-sidebar);
+  --color-sidebar-foreground: var(--app-text-l2);
+  --color-sidebar-primary: var(--app-color-theme);
+  --color-sidebar-primary-foreground: var(--app-color-secondary);
+  --color-sidebar-accent: var(--app-color-theme-fade);
+  --color-sidebar-accent-foreground: var(--app-color-theme);
+  --color-sidebar-border: var(--app-border-l1);
+  --color-sidebar-ring: var(--app-color-theme);
+
+  /* chart tokens */
+  --color-chart-1: var(--app-color-theme);
+  --color-chart-2: var(--app-color-blue);
+  --color-chart-3: var(--app-color-green);
+  --color-chart-4: var(--app-color-yellow);
+  --color-chart-5: var(--app-color-red);
+
+  /* omnimundia app palette exposed as Tailwind utilities */
+  --color-app-theme: var(--app-color-theme);
+  --color-app-secondary: var(--app-color-secondary);
+  --color-app-blue: var(--app-color-blue);
+  --color-app-green: var(--app-color-green);
+  --color-app-yellow: var(--app-color-yellow);
+  --color-app-red: var(--app-color-red);
+
+  /* background levels */
+  --color-app-bg-l1: var(--app-bg-l1);
+  --color-app-bg-l2: var(--app-bg-l2);
+  --color-app-bg-l3: var(--app-bg-l3);
+  --color-app-bg-l4: var(--app-bg-l4);
+  --color-app-bg-l5: var(--app-bg-l5);
+  --color-app-bg-l6: var(--app-bg-l6);
+  --color-app-bg-l7: var(--app-bg-l7);
+  --color-app-bg-topbar: var(--app-bg-topbar);
+  --color-app-bg-sidebar: var(--app-bg-sidebar);
+  --color-app-bg-card: var(--app-bg-card);
+  --color-app-bg-button: var(--app-bg-button);
+  --color-app-bg-button-hover: var(--app-bg-button-hover);
+
+  /* text levels */
+  --color-app-text-l1: var(--app-text-l1);
+  --color-app-text-l2: var(--app-text-l2);
+  --color-app-text-l3: var(--app-text-l3);
+  --color-app-text-l4: var(--app-text-l4);
+  --color-app-text-l5: var(--app-text-l5);
+  --color-app-text-l6: var(--app-text-l6);
+
+  /* border levels */
+  --color-app-border-l1: var(--app-border-l1);
+  --color-app-border-l2: var(--app-border-l2);
+  --color-app-border-l3: var(--app-border-l3);
+  --color-app-border-l4: var(--app-border-l4);
+  --color-app-border-hover: var(--app-border-hover);
+  --color-app-border-focus: var(--app-border-focus);
+
+  /* semantic fades */
+  --color-app-green-fade: var(--app-color-green-fade);
+  --color-app-yellow-fade: var(--app-color-yellow-fade);
+  --color-app-red-fade: var(--app-color-red-fade);
+
+  /* fonts */
+  --font-sans: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  --font-mono: Consolas, Monaco, monospace;
+  --font-heading: var(--font-sans);
+
+  /* radius scale */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 10px;
+  --radius-2xl: 12px;
+  --radius-3xl: 14px;
+  --radius-4xl: 18px;
+
+  /* shadows */
+  --shadow-popover: 0 4px 12px rgba(0, 0, 0, 0.3);
+  --shadow-dropdown: 0 4px 12px rgba(0, 0, 0, 0.45);
+
+  /* animations */
+  --animate-pulse-ring: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-fade-in: fade-in 0.3s ease;
+  --animate-slide-in-right: slide-in-right 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* ==========================================================================
+   Light Theme (default) — warm parchment / amber
+   ========================================================================== */
+:root {
+  /* primary / brand */
+  --app-color-theme: #d97706;
+  --app-color-theme-fade: rgba(217, 119, 6, 0.18);
+  --app-color-secondary: #fffdf7;
+  --app-color-blue: #409eff;
+  --app-color-green: #4caf50;
+  --app-color-green-fade: rgba(76, 175, 80, 0.18);
+  --app-color-yellow: #d8af1a;
+  --app-color-yellow-fade: rgba(216, 175, 26, 0.18);
+  --app-color-red: #f56c6c;
+  --app-color-red-fade: rgba(245, 108, 108, 0.18);
+  --app-color-brand: #646cff;
+  --app-color-black-shadow: rgba(0, 0, 0, 0.15);
+
+  /* background levels */
+  --app-bg-l1: #faf4ea;
+  --app-bg-l2: #f7efe4;
+  --app-bg-l3: #f3e6d6;
+  --app-bg-l4: #efe3ca;
+  --app-bg-l5: #e5d5b9;
+  --app-bg-l6: #e0cdb1;
+  --app-bg-l7: #dac5a9;
+  --app-bg-topbar: #eedabe;
+  --app-bg-sidebar: #efe5d5;
+  --app-bg-card: #fffaf2;
+  --app-bg-button: #e9dac0;
+  --app-bg-button-hover: #e3d2b0;
+  --app-bg-game-option: #f2e2bf;
+  --app-bg-game-option-hover: #e8d4aa;
+
+  /* text levels */
+  --app-text-l1: #2a1b0a;
+  --app-text-l2: #3c2712;
+  --app-text-l3: #5b3f21;
+  --app-text-l4: #7a5a35;
+  --app-text-l5: #9e784f;
+  --app-text-l6: #c39f70;
+  --app-story-description-color: #3c2712;
+  --app-story-option-color: #3c2712;
+
+  /* border levels */
+  --app-border-l1: #eadcc8;
+  --app-border-l2: #dbc6a6;
+  --app-border-l3: #c8a676;
+  --app-border-l4: #b0834e;
+  --app-border-hover: #a0683b;
+  --app-border-focus: #d78c3f;
+
+  /* shadows */
+  --app-shadow-popover: 0 4px 12px rgba(0, 0, 0, 0.3);
+  --app-shadow-dropdown: 0 4px 12px rgba(0, 0, 0, 0.45);
+  --app-shadow-focus: 0 0 0 1px rgba(255, 255, 255, 0.12);
+
+  /* font scale */
+  --app-font-base: 16px;
+  --app-font-scale: 1;
+
+  /* mobile bottom bar */
+  --app-mobile-bottom-bar-height: 54px;
+  --app-mobile-bottom-bar-side-gap: 8px;
+  --app-mobile-bottom-bar-bottom-gap: 8px;
+  --app-mobile-bottom-bar-radius: 18px;
+
+  /* shadcn radius */
+  --radius: 0.25rem;
+}
+
+/* ==========================================================================
+   Dark Theme — near-black with brighter gold
+   ========================================================================== */
+.dark {
+  --app-color-theme: #de940a;
+  --app-color-theme-fade: rgba(222, 148, 10, 0.18);
+  --app-color-secondary: #1a1a1a;
+  --app-color-black-shadow: rgba(0, 0, 0, 0.4);
+
+  --app-bg-l1: #1a1a1a;
+  --app-bg-l2: #1f1f1f;
+  --app-bg-l3: #272727;
+  --app-bg-l4: #2f2f2f;
+  --app-bg-l5: #363636;
+  --app-bg-l6: #3f3f3f;
+  --app-bg-l7: #4c4c4c;
+  --app-bg-topbar: #0d0d0d;
+  --app-bg-sidebar: #151515;
+  --app-bg-card: #2f2f2f;
+  --app-bg-button: #5f5f5f;
+  --app-bg-button-hover: #6f6f6f;
+  --app-bg-game-option: #3f3f3f;
+  --app-bg-game-option-hover: #4c4c4c;
+
+  --app-text-l1: #ffffff;
+  --app-text-l2: #eeeeee;
+  --app-text-l3: #cccccc;
+  --app-text-l4: #a9a9a9;
+  --app-text-l5: #888888;
+  --app-text-l6: #666666;
+  --app-story-description-color: #f2eee6;
+  --app-story-option-color: #f3f1eb;
+
+  --app-border-l1: #333333;
+  --app-border-l2: #444444;
+  --app-border-l3: #555555;
+  --app-border-l4: #666666;
+  --app-border-hover: #777777;
+  --app-border-focus: #aaaaaa;
+}
+
+/* ==========================================================================
+   Base Layer
+   ========================================================================== */
+@layer base {
+  * {
+    border-color: var(--app-border-l1);
+    outline-color: var(--app-color-theme);
+  }
+
+  html {
+    font-family: var(--font-sans);
+    font-size: calc(var(--app-font-base) * var(--app-font-scale));
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--app-bg-l1);
+    color: var(--app-text-l2);
+    margin: 0;
+    min-height: 100vh;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* mobile font scale */
+  @media (max-width: 768px) {
+    :root {
+      --app-font-scale: 0.875;
+    }
+  }
+
+  /* custom scrollbar — thin gradient pill */
+  *::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  *::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--app-border-hover), var(--app-border-l3));
+    border: 2px solid transparent;
+    border-radius: 999px;
+    background-clip: padding-box;
+    min-height: 40px;
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, var(--app-border-focus), var(--app-border-l4));
+    background-clip: padding-box;
+  }
+  *::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--app-border-l3) transparent;
+  }
+}
+
+/* ==========================================================================
+   Keyframe Animations (from original CSS)
+   ========================================================================== */
+@keyframes pulse-ring {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 6px rgba(64, 158, 255, 0.2);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 10px rgba(64, 158, 255, 0.08);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 6px rgba(64, 158, 255, 0.2);
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-in-right {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes skeleton-loading {
+  0% { background-position: 100% 50%; }
+  100% { background-position: 0 50%; }
+}
+
+@keyframes dialog-fade-in {
+  from { opacity: 0; transform: translate3d(0, -20px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease;
+}

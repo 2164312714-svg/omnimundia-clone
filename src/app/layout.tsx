@@ -6,7 +6,10 @@ import { UserProvider } from "@/hooks/use-user";
 import { AppShell } from "@/components/layout/app-shell";
 
 export const metadata: Metadata = {
-  title: "Omnimundia — 无限可能的 AI 互动阅读平台",
+  title: {
+    default: "Omnimundia — 无限可能的 AI 互动阅读平台",
+    template: "%s | Omnimundia",
+  },
   description: "超高自由度的推演。AI 驱动的互动阅读与创作平台。",
 };
 

@@ -307,15 +307,21 @@ export function GamePlayer({ scriptId }: { scriptId: string }) {
             </div>
           </div>
 
-          {/* 评论区抽屉 */}
+          {/* 评论区抽屉 — 桌面侧栏 / 移动端全屏覆盖 */}
           {showComments && (
-            <aside
-              className="flex h-full w-[340px] shrink-0 flex-col overflow-hidden border-l"
-              style={{
-                borderColor: "var(--app-border-l1)",
-                backgroundColor: "var(--app-bg-l2)",
-              }}
-            >
+            <>
+              {/* 移动端背景遮罩 */}
+              <div
+                className="fixed inset-0 z-40 bg-black/40 md:hidden"
+                onClick={() => setShowComments(false)}
+              />
+              <aside
+                className="fixed inset-0 z-50 flex h-full flex-col overflow-hidden border-l md:relative md:inset-auto md:w-[340px] md:shrink-0"
+                style={{
+                  borderColor: "var(--app-border-l1)",
+                  backgroundColor: "var(--app-bg-l2)",
+                }}
+              >
               <div className="flex items-center justify-between border-b px-4 py-2.5" style={{ borderColor: "var(--app-border-l1)" }}>
                 <span className="text-sm font-medium text-app-text-l2">剧本评论</span>
                 <button
@@ -329,6 +335,7 @@ export function GamePlayer({ scriptId }: { scriptId: string }) {
                 <CommentsPanel scriptId={scriptId} embedded />
               </div>
             </aside>
+            </>
           )}
         </div>
       </div>

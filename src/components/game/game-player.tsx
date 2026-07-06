@@ -5,7 +5,6 @@ import { Send, Loader2, Settings2, MessageCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { MarkdownText } from "@/components/shared/markdown-text";
 import { GameSidebar } from "./game-sidebar";
 import { CommentsPanel } from "@/components/comments/comments-panel";
@@ -91,6 +90,14 @@ export function GamePlayer({ scriptId }: { scriptId: string }) {
   const allTurns = [mockTurnData, ...nextTurns];
   const currentTurn = allTurns[Math.min(turnIndex, allTurns.length - 1)];
   const sceneRef = useRef<HTMLDivElement>(null);
+  const turnTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // 卸载时清理定时器
+  useEffect(() => {
+    return () => {
+      if (turnTimerRef.current) clearTimeout(turnTimerRef.current);
+    };
+  }, []);
 
   // 处理选项点击
   const handleOptionClick = () => {
@@ -98,11 +105,12 @@ export function GamePlayer({ scriptId }: { scriptId: string }) {
     setIsProcessing(true);
 
     // 模拟 AI 推演延迟
-    setTimeout(() => {
+    turnTimerRef.current = setTimeout(() => {
       if (turnIndex < allTurns.length - 1) {
         setTurnIndex(turnIndex + 1);
       }
       setIsProcessing(false);
+      turnTimerRef.current = null;
     }, 2000);
   };
 
@@ -112,11 +120,12 @@ export function GamePlayer({ scriptId }: { scriptId: string }) {
     setIsProcessing(true);
     setCustomInput("");
 
-    setTimeout(() => {
+    turnTimerRef.current = setTimeout(() => {
       if (turnIndex < allTurns.length - 1) {
         setTurnIndex(turnIndex + 1);
       }
       setIsProcessing(false);
+      turnTimerRef.current = null;
     }, 2500);
   };
 

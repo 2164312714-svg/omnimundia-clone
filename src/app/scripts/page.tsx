@@ -21,7 +21,6 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import {
-  mockScripts,
   scriptCategories,
   sortOptions,
   carouselBanners,
@@ -43,7 +42,7 @@ export default function ScriptSelectionPage() {
   const [currentPage, setCurrentPage] = useState(1);
 
   const filteredScripts = useMemo(() => {
-    let scripts = getScriptsByCategory(activeCategory);
+    const scripts = getScriptsByCategory(activeCategory);
     // 排序
     const sorted = [...scripts];
     switch (sortBy) {

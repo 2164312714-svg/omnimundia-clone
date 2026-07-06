@@ -37,7 +37,8 @@ export function ScriptCard({ script, className, isListMode = false }: ScriptCard
         "group cursor-pointer p-3 transition-colors",
         isListMode
           ? "rounded-none border-x-0 first:border-t-0"
-          : "hover:bg-app-bg-l5"
+          : "hover:bg-app-bg-l5",
+        className
       )}
       style={{
         backgroundColor: "var(--app-bg-card)",

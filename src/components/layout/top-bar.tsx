@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { BookOpen, Clock, Heart, Info, PenSquare, Moon, Sun, Wallet, UserRound } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { BookOpen, Clock, Heart, Info, PenSquare, Moon, Sun, Wallet } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Logo } from "./logo";
 import { useTheme } from "@/hooks/use-theme";
@@ -10,7 +10,6 @@ import { useUser } from "@/hooks/use-user";
 import { useModal } from "@/hooks/use-modal";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -28,6 +27,7 @@ const navItems = [
 
 export function TopBar() {
   const pathname = usePathname();
+  const router = useRouter();
   const { theme, toggleTheme } = useTheme();
   const { user, logout, isLoggedIn } = useUser();
   const { showModal } = useModal();
@@ -83,7 +83,7 @@ export function TopBar() {
           variant="ghost"
           size="sm"
           className="hidden text-app-text-l3 hover:text-app-text-l1 sm:flex"
-          onClick={() => isLoggedIn ? window.location.href = "/my-scripts" : showModal("auth")}
+          onClick={() => isLoggedIn ? router.push("/my-scripts") : showModal("auth")}
         >
           <PenSquare className="h-4 w-4" />
           <span className="ml-1 text-sm">创作</span>

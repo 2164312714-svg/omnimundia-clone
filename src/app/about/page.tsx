@@ -1,4 +1,4 @@
-import { Sparkles, Heart, MessageCircle, PenSquare, Bot } from "lucide-react";
+import { Sparkles, Heart, PenSquare, Bot } from "lucide-react";
 import { Logo } from "@/components/layout/logo";
 
 export default function AboutPage() {
@@ -34,7 +34,7 @@ export default function AboutPage() {
         <p className="leading-relaxed text-app-text-l3">
           Omnimundia 是一个 AI 驱动的互动阅读与创作平台。在这里，每一个剧本都不是固定的选项树，
           而是一个由 AI 实时推演的活的世界。你的每一个选择、每一次行动，都会被世界记住，
-          并影响后续的走向。没有"正确答案"，只有你的故事。
+          并影响后续的走向。没有「正确答案」，只有你的故事。
         </p>
       </section>
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { Heart, MessageSquare, Send, ImagePlus, CornerDownRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { mockComments } from "@/lib/mock-data";
@@ -26,7 +26,7 @@ export function CommentsPanel({ scriptId, embedded = false }: CommentsPanelProps
   const [replyTo, setReplyTo] = useState<string | null>(null);
   const [replyDraft, setReplyDraft] = useState("");
 
-  const handlePost = () => {
+  const handlePost = useCallback(() => {
     const text = draft.trim();
     if (!text) return;
     const newComment: Comment = {
@@ -43,9 +43,9 @@ export function CommentsPanel({ scriptId, embedded = false }: CommentsPanelProps
     };
     setComments((prev) => [newComment, ...prev]);
     setDraft("");
-  };
+  }, [draft, scriptId, user.nickname]);
 
-  const handleReply = (parentId: string) => {
+  const handleReply = useCallback((parentId: string) => {
     const text = replyDraft.trim();
     if (!text) return;
     const parent = comments.find((c) => c.id === parentId);
@@ -70,9 +70,9 @@ export function CommentsPanel({ scriptId, embedded = false }: CommentsPanelProps
     );
     setReplyDraft("");
     setReplyTo(null);
-  };
+  }, [replyDraft, comments, scriptId, user.nickname]);
 
-  const toggleLike = (id: string, isReply = false, parentId?: string) => {
+  const toggleLike = useCallback((id: string, isReply = false, parentId?: string) => {
     setComments((prev) =>
       prev.map((c) => {
         if (!isReply && c.id === id) {
@@ -99,7 +99,7 @@ export function CommentsPanel({ scriptId, embedded = false }: CommentsPanelProps
         return c;
       })
     );
-  };
+  }, []);
 
   return (
     <div

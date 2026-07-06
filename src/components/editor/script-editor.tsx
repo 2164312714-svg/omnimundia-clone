@@ -35,6 +35,7 @@ import type { EntityGroup, Entry, PassiveState, PeriodicEvent, OneTimeEvent } fr
 
 type EditorTab = "world" | "entries" | "events" | "settings";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function ScriptEditor({ scriptId }: { scriptId: string }) {
   const [activeTab, setActiveTab] = useState<EditorTab>("world");
   const [title, setTitle] = useState("雾港迷踪");
@@ -144,7 +145,7 @@ export function ScriptEditor({ scriptId }: { scriptId: string }) {
 /* ============== 世界树编辑器 ============== */
 
 function WorldTreeEditor() {
-  const [groups, setGroups] = useState<EntityGroup[]>(mockEntityGroups);
+  const [groups] = useState<EntityGroup[]>(mockEntityGroups);
   const [selectedEntity, setSelectedEntity] = useState<string | null>("e-1");
 
   const selectedEntityData = groups
@@ -257,7 +258,7 @@ function WorldTreeEditor() {
 /* ============== 词条树编辑器 ============== */
 
 function EntryTreeEditor() {
-  const [entries, setEntries] = useState<Entry[]>(mockEntryTree);
+  const [entries] = useState<Entry[]>(mockEntryTree);
   const [selectedEntry, setSelectedEntry] = useState<string | null>("entry-1");
   const [expanded, setExpanded] = useState<Set<string>>(new Set(["entry-1", "entry-2"]));
 

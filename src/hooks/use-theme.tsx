@@ -15,10 +15,11 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setThemeState] = useState<ThemeMode>("light");
 
   useEffect(() => {
-    // 读取 localStorage 或系统偏好
+    // 读取 localStorage 或系统偏好（SSR 安全：仅在客户端 effect 中执行）
     const saved = localStorage.getItem("omnimundia-theme") as ThemeMode | null;
     const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
     const initial: ThemeMode = saved ?? (prefersDark ? "dark" : "light");
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setThemeState(initial);
   }, []);
 

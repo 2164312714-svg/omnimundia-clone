@@ -1,4 +1,4 @@
-import type { Script, ScriptGenre } from "@/lib/types";
+import type { Script } from "@/lib/types";
 
 /** 剧本分类列表（对应原站 category-panel） */
 export const scriptCategories: Array<{ key: string; label: string; count: number }> = [

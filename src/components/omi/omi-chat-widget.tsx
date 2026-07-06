@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
-import { MessageCircle, X, Send, Sparkles, Trash2, ChevronDown } from "lucide-react";
+import { X, Send, Sparkles, Trash2, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { mockChatMessages, mockMemories } from "@/lib/mock-data";
 import type { ChatMessage } from "@/lib/types";
@@ -22,13 +22,18 @@ export function OmiChatWidget() {
   const dragRef = useRef<{ startX: number; startY: number; baseX: number; baseY: number } | null>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const streamIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  // 初始定位右下
+  // 初始定位右下 + 卸载清理
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setPos({
       x: window.innerWidth - 80,
       y: window.innerHeight - 140,
     });
+    return () => {
+      if (streamIntervalRef.current) clearInterval(streamIntervalRef.current);
+    };
   }, []);
 
   // 自动滚动到底部
@@ -100,6 +105,7 @@ export function OmiChatWidget() {
       );
       if (charIndex >= reply.length) {
         clearInterval(interval);
+        streamIntervalRef.current = null;
         setMessages((prev) =>
           prev.map((m) =>
             m.id === tempId ? { ...m, content: reply, isStreaming: false } : m
@@ -108,6 +114,7 @@ export function OmiChatWidget() {
         setStreaming(false);
       }
     }, 40);
+    streamIntervalRef.current = interval;
   }, [input, streaming]);
 
   const handleClear = () => {

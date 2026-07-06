@@ -15,7 +15,7 @@ export default function ScriptSearchPage() {
   const [sortBy, setSortBy] = useState("hot");
 
   const results = useMemo(() => {
-    let scripts = searchScripts(submittedQuery);
+    const scripts = searchScripts(submittedQuery);
     const sorted = [...scripts];
     switch (sortBy) {
       case "hot":
@@ -95,7 +95,7 @@ export default function ScriptSearchPage() {
         </div>
         {submittedQuery && (
           <span className="text-sm text-app-text-l4">
-            搜索"{submittedQuery}" · {results.length} 个结果
+            搜索「{submittedQuery}」· {results.length} 个结果
           </span>
         )}
       </div>

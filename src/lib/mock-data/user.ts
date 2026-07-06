@@ -1,4 +1,4 @@
-import type { User, Wallet, RechargeProduct, GameSave, SaveGroup } from "@/lib/types";
+import type { User, Wallet, RechargeProduct, SaveGroup } from "@/lib/types";
 
 /** 当前登录用户（mock） */
 export const currentUser: User = {

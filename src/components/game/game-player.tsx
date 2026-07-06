@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Send, Loader2, Settings2, MessageCircle } from "lucide-react";
+import { Send, Loader2, Settings2, MessageCircle, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -89,6 +89,7 @@ export function GamePlayer({ scriptId }: { scriptId: string }) {
 
   const allTurns = [mockTurnData, ...nextTurns];
   const currentTurn = allTurns[Math.min(turnIndex, allTurns.length - 1)];
+  const isLastTurn = turnIndex >= allTurns.length - 1;
   const sceneRef = useRef<HTMLDivElement>(null);
   const turnTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -101,7 +102,7 @@ export function GamePlayer({ scriptId }: { scriptId: string }) {
 
   // 处理选项点击
   const handleOptionClick = () => {
-    if (isProcessing) return;
+    if (isProcessing || isLastTurn) return;
     setIsProcessing(true);
 
     // 模拟 AI 推演延迟
@@ -116,7 +117,7 @@ export function GamePlayer({ scriptId }: { scriptId: string }) {
 
   // 处理自由输入
   const handleCustomSubmit = () => {
-    if (!customInput.trim() || isProcessing) return;
+    if (!customInput.trim() || isProcessing || isLastTurn) return;
     setIsProcessing(true);
     setCustomInput("");
 
@@ -214,8 +215,20 @@ export function GamePlayer({ scriptId }: { scriptId: string }) {
                 )}
               </div>
 
-              {/* 选项按钮 */}
+              {/* 选项按钮 / 终局面板 */}
               {!isProcessing && (
+                isLastTurn ? (
+                  <div
+                    className="flex flex-col items-center gap-3 p-6 text-center"
+                    style={{ borderTop: "1px solid var(--app-border-l1)" }}
+                  >
+                    <Sparkles className="h-8 w-8 text-app-theme" />
+                    <p className="text-base font-semibold text-app-text-l1">本剧本已完结</p>
+                    <p className="text-sm text-app-text-l4">
+                      感谢你的游玩。你可以从侧边栏加载之前的存档，或回到剧本大厅探索更多世界。
+                    </p>
+                  </div>
+                ) : (
                 <div
                   className="grid gap-2 p-3"
                   style={{
@@ -255,10 +268,11 @@ export function GamePlayer({ scriptId }: { scriptId: string }) {
                     </button>
                   ))}
                 </div>
+                )
               )}
 
               {/* 自由输入区 */}
-              {!isProcessing && (
+              {!isProcessing && !isLastTurn && (
                 <div
                   className="flex items-end gap-2 border-t p-3"
                   style={{ borderColor: "var(--app-border-l1)" }}

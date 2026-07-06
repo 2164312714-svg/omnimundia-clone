@@ -32,7 +32,7 @@ export default function MyScriptsPage() {
           >
             <div className="grid gap-5" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))" }}>
               {publishedScripts.map((script) => (
-                <ScriptCard key={script.id} script={script} />
+                <ScriptCard key={script.id} script={script} href={`/my-scripts/${script.id}`} />
               ))}
             </div>
           </div>
@@ -51,7 +51,7 @@ export default function MyScriptsPage() {
           >
             <div className="grid gap-5" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))" }}>
               {draftScripts.map((script) => (
-                <ScriptCard key={script.id} script={script} />
+                <ScriptCard key={script.id} script={script} href={`/my-scripts/${script.id}`} />
               ))}
             </div>
           </div>

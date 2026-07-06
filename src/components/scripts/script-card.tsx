@@ -25,11 +25,13 @@ interface ScriptCardProps {
   className?: string;
   /** 移动端列表模式（行式，无边框圆角） */
   isListMode?: boolean;
+  /** 自定义链接（默认 /game/[scriptId]） */
+  href?: string;
 }
 
 /** 剧本卡片 — 对应原站 script-card */
-export function ScriptCard({ script, className, isListMode = false }: ScriptCardProps) {
-  const linkHref = `/game/${script.id}`;
+export function ScriptCard({ script, className, isListMode = false, href }: ScriptCardProps) {
+  const linkHref = href ?? `/game/${script.id}`;
 
   return (
     <Card

@@ -24,14 +24,25 @@ export function OmiChatWidget() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const streamIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  // 初始定位右下 + 卸载清理
+  // 初始定位右下 + 卸载清理 + resize 重新约束
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setPos({
       x: window.innerWidth - 80,
       y: window.innerHeight - 140,
     });
+
+    const onResize = () =>
+      setPos((p) => ({
+        x: Math.max(8, Math.min(window.innerWidth - 56, p.x)),
+        y: Math.max(8, Math.min(window.innerHeight - 56, p.y)),
+      }));
+    window.addEventListener("resize", onResize);
+    window.addEventListener("orientationchange", onResize);
+
     return () => {
+      window.removeEventListener("resize", onResize);
+      window.removeEventListener("orientationchange", onResize);
       if (streamIntervalRef.current) clearInterval(streamIntervalRef.current);
     };
   }, []);
@@ -118,6 +129,11 @@ export function OmiChatWidget() {
   }, [input, streaming]);
 
   const handleClear = () => {
+    if (streamIntervalRef.current) {
+      clearInterval(streamIntervalRef.current);
+      streamIntervalRef.current = null;
+    }
+    setStreaming(false);
     setMessages([mockChatMessages[0]]);
   };
 
@@ -151,8 +167,8 @@ export function OmiChatWidget() {
         <div
           className="fixed z-[901] flex flex-col overflow-hidden border"
           style={{
-            left: `${Math.min(pos.x - 360, window.innerWidth - 400)}px`,
-            top: `${Math.max(20, pos.y - 480)}px`,
+            left: `${Math.max(8, Math.min(pos.x - 360, window.innerWidth - 388))}px`,
+            top: `${Math.max(20, Math.min(pos.y - 480, window.innerHeight - 548))}px`,
             width: "380px",
             height: "540px",
             backgroundColor: "var(--app-bg-l5)",

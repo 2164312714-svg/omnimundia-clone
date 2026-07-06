@@ -284,28 +284,42 @@ function EntryTreeEditor() {
 
   const renderEntry = (entry: Entry, depth: number): React.ReactNode => (
     <div key={entry.id}>
-      <button
-        onClick={() => setSelectedEntry(entry.id)}
-        className={cn(
-          "flex w-full items-center gap-1 rounded px-2 py-1.5 text-left text-sm transition-colors",
-          selectedEntry === entry.id
-            ? "text-app-secondary"
-            : "text-app-text-l2 hover:bg-app-bg-l3"
-        )}
+      <div
+        className="flex w-full items-center gap-1 rounded px-1 py-0.5 text-sm transition-colors"
         style={{
-          paddingLeft: `${depth * 16 + 8}px`,
-          backgroundColor: selectedEntry === entry.id ? "var(--app-color-theme)" : undefined,
+          paddingLeft: `${depth * 16}px`,
         }}
       >
+        {/* 展开/折叠按钮（键盘可达） */}
         {entry.children.length > 0 ? (
-          <span onClick={(e) => { e.stopPropagation(); toggleExpand(entry.id); }}>
+          <button
+            type="button"
+            onClick={(e) => { e.stopPropagation(); toggleExpand(entry.id); }}
+            aria-label={expanded.has(entry.id) ? "折叠" : "展开"}
+            className="flex h-5 w-5 shrink-0 items-center justify-center rounded text-app-text-l4 hover:text-app-theme"
+          >
             {expanded.has(entry.id) ? <ChevronDown className="h-3 w-3" /> : <ChevronRight className="h-3 w-3" />}
-          </span>
+          </button>
         ) : (
-          <FileText className="h-3 w-3 shrink-0" />
+          <span className="flex h-5 w-5 shrink-0 items-center justify-center">
+            <FileText className="h-3 w-3 text-app-text-l5" />
+          </span>
         )}
-        <span className="truncate">{entry.title}</span>
-      </button>
+        {/* 选择按钮 */}
+        <button
+          type="button"
+          onClick={() => setSelectedEntry(entry.id)}
+          className={cn(
+            "flex-1 truncate rounded px-2 py-1 text-left text-sm transition-colors",
+            selectedEntry === entry.id
+              ? "text-app-secondary"
+              : "text-app-text-l2 hover:bg-app-bg-l3"
+          )}
+          style={selectedEntry === entry.id ? { backgroundColor: "var(--app-color-theme)" } : undefined}
+        >
+          {entry.title}
+        </button>
+      </div>
       {entry.children.length > 0 && expanded.has(entry.id) && (
         <div>{entry.children.map((c) => renderEntry(c, depth + 1))}</div>
       )}

@@ -158,7 +158,13 @@ export function CommentsPanel({ scriptId, embedded = false }: CommentsPanelProps
             replyTo={replyTo}
             replyDraft={replyDraft}
             setReplyDraft={setReplyDraft}
-            onToggleReply={() => setReplyTo(replyTo === c.id ? null : c.id)}
+            onToggleReply={() => {
+              setReplyTo((prev) => {
+                const next = prev === c.id ? null : c.id;
+                if (next !== prev) setReplyDraft("");
+                return next;
+              });
+            }}
             onReply={() => handleReply(c.id)}
             onLike={() => toggleLike(c.id)}
             onLikeReply={(rid) => toggleLike(rid, true, c.id)}
